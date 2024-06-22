@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.kocka {
+  display: flex;
+  justify-content: center; /* Horizontalno centriranje */
+  align-items: center; /* Vertikalno centriranje */
+  height: 20vh; /* Visina roditeljskog elementa */
+  width: 20vh;
+  border: 1px solid black;
+  margin-left: 100vh;
+  margin-top: 25vh;
+
+}
+
+.input2 {
+  display: flex;
+  justify-content: center; /* Horizontalno centriranje */
+  align-items: center; /* Vertikalno centriranje */
+  
+  margin-top: 5vh;
+  margin-left: 5vh;
+
+}
+
+.input3 {
+  display: flex;
+  justify-content: center; /* Horizontalno centriranje */
+  align-items: center; /* Vertikalno centriranje */
+  
+  margin-top: 5vh;
+  margin-left: 103vh;
+  width: 15vh;
+  height: 5vh;
+
+}
