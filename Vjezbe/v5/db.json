@@ -1,37 +1,29 @@
 {
-
-    "items" : [
-
-        {
-
-            "id" : 1,
-            "cekiran" : true,
-            "item" : "Paslju sa kobasicom"
-
-        },
-        {
-
-            "id" : 2,
-            "cekiran" : false,
-            "item" : "Makarone sa sirom"
-
-        },
-        {
-
-            "id" : 3,
-            "cekiran" : true,
-            "item" : "Manderine"
-
-        }
-
-
-
-
-
-
-    ]
-
-
-
-
+  "items": [
+    {
+      "id": 1,
+      "cekiran": true,
+      "item": "Paslju sa kobasicom"
+    },
+    {
+      "id": 2,
+      "cekiran": false,
+      "item": "Makarone sa sirom"
+    },
+    {
+      "id": 3,
+      "cekiran": true,
+      "item": "Manderine"
+    },
+    {
+      "id": 4,
+      "cekiran": false,
+      "item": "dada"
+    },
+    {
+      "id": 5,
+      "cekiran": false,
+      "item": "sadasd"
+    }
+  ]
 }

@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import KreirajHranu from './KreirajHranu';
 import PretraziProizvode from './PretraziProizvode'
+import apiReq from './apiRequest';
 
 
 function App() {
@@ -62,30 +63,78 @@ function App() {
 
   
 
-  const dodajItem = (item) =>
-  {
-    const id = items.length ? items[items.length - 1].id + 1 : 1;
-    const noviState = {id ,
-              cekiran : false,
-              item 
+  const dodajItem = async (item) => {
+    // Pronađi maksimalni id u postojećim stavkama
+    const maxId = items.length ? Math.max(...items.map(item => item.id)) : 0;
+    const id = maxId + 1;
+  
+    const noviState = {
+      id, // Nema potrebe za kastovanjem
+      cekiran: false,
+      item
+    };
+  
+    const listItems = [...items, noviState];
+    setItems(listItems);
+  
+    const postOption = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(noviState)
+    };
+  
+    try {
+      const result = await apiReq(URL, postOption);
+      if (result) {
+        setFetchError(result);
+      }
+    } catch (error) {
+      setFetchError(error.message);
     }
+  };
+  
   
 
-    const listItems = [...items , noviState]
-    setItems(listItems)
-      
-  }
 
-
-  const cekirajBox = (id) => 
+  const cekirajBox = async (id) => 
     
     {
 
       const listaAjtema = items.map((item) => item.id === id ? {...item, cekiran : !item.cekiran} : item)
       setItems(listaAjtema)
 
+
+      const myItem  = listaAjtema.filter((item) => item.id ===  id);
+
+
+      const updateOptions = {
+        method : "PATCH",
+        headers : {
+         "Content-Type" : "aplication/json"
+        },
+        body : JSON.stringify({
+
+          cekiran : myItem[0].cekiran  /// apdejtvanje cekiran vrendnosti na prvom elementu u nizu, uvijek ce biti 1
+
+        })
+
+
+
+      }
+
+
+      const req = `${URL}/${id}`;
+
       
-      
+      const result = await apiReq(req,updateOptions);
+
+
+      if (result)
+      {
+        setFetchError(result);
+      }
   }
 
 
