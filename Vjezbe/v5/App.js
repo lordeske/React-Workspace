@@ -139,17 +139,32 @@ function App() {
 
 
 
-  const obitsiBox = (id) => 
-    
-    {
+const obitsiBox = async (id) => 
+{
   
-        const liste = items.filter((item) => 
-          item.id !== id
-        );
-        setItems(liste)
-        
-        
+  const liste = items.filter((item) => 
+    item.id !== id);
+    setItems(liste)
+
+
+  const deleteOptions = 
+  {
+    method : "DELETE"
   }
+
+  const request = `${URL}/${id}`
+
+
+  const result = await apiReq(request,deleteOptions)
+  console.log(request)
+
+  if (result)
+  {
+    setFetchError(request)
+  }
+
+        
+}
 
 
 
