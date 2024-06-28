@@ -1,9 +1,37 @@
 import React from 'react'
+import { useParams , Link } from 'react-router-dom'
 
-const StranaObjava = () => {
+const StranaObjava = ({objava , handleObrisi}) => {
+
+  const { id } = useParams();
+
+  const obj = objava.find(obj => (obj.id) == id)
+
+  
   return (
-    <main>
-    <h1>Strana jedne objave</h1>
+    <main className='PostPage'>
+      <article className='post'>
+        {obj &&   /// AKO OBJAVA POSTOJI PRIKAZI JE
+          
+          <>
+            <h2>{obj.naslov}</h2>
+            <p className='postDate' > {obj.datetime}</p>
+            <p className='postBody' > {obj.body}</p>
+            <button onClick={()=> handleObrisi(obj.id)}>Obrisi ovu objavu</button>
+          </>
+          
+          }
+
+
+          {
+            !obj &&    /// AKO NEMA TE VISE OBJAVE!!! 
+            
+            <>
+              <p style={{marginTop : "2rem"}}>Ova objava vise dostupna</p>
+              <Link to="/">Vrati se na pocetnu</Link>
+            </>
+          }
+      </article>
     </main>
   )
 }

@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes , useNavigate} from 'react-router-dom';
+import {  Route, Routes , useNavigate} from 'react-router-dom';
 import Zaglavlje from './elementi/Zaglavlje';
 import Futer from './elementi/Futer';
 import Navigacija from './elementi/Navigacija';
@@ -15,7 +15,17 @@ import { useState } from 'react';
 
 function App() {
 
-  const [objava,setObajava] = useState([
+  // IMPORTI
+  const navigacija = useNavigate();
+
+
+
+
+
+
+
+  //// STEJTOVI 
+  const [objava,setObajava] = useState([   /// Nas niz Objava
     {
       id : 1,
       naslov : "Kako pobijediti anksioznost",
@@ -34,11 +44,53 @@ function App() {
       datetime : "July 01, 2022",
       body : "Nego sta je, gume trosi drift"
     },])
-  const [pretraga, setPretraga] = useState("");
+  const [pretraga, setPretraga] = useState("");   /// Pretraga 
   const [rezultatPretrage, setRezultatPretrage] = useState([])
 
 
 
+  // STEJTOVI ZA OBJAVU
+  const [imeObjave, setImeObjave] = useState("");
+  const [bodyObjave, setBodyObjave] = useState  ("");
+
+
+
+  // FUNKCIJE
+
+  const handleObrisi = (id) =>
+    {
+      const noviNiz = objava.filter(obj => obj.id != id);
+
+      setObajava(noviNiz);
+      navigacija("/") 
+    
+    }
+
+
+  const handleKreiraj = (e) =>
+    {
+      e.preventDefault();
+
+      const id = objava.length ? objava[objava.length - 1].id + 1 : 1; 
+      const datum = new Date().getDate ;
+
+      const novaObjava = {
+          id : id,
+          naslov : imeObjave,
+          datetime : datum,
+          body : bodyObjave
+      }
+
+      const objave2 = {...objava, novaObjava};
+      setObajava(objave2);
+      navigacija("/")
+
+
+      setBodyObjave("");
+      setImeObjave("")
+
+
+    }
 
 
 
@@ -48,10 +100,12 @@ function App() {
       <Navigacija pretraga={pretraga} setPretraga={setPretraga}/>
       <Routes>
         <Route path="/" element={<Pocetna objava = {objava} />} />
-        <Route path="/kreiraj-objavu" element={<KreirajObjavu />} />
+        <Route path="/kreiraj-objavu" element={
+          <KreirajObjavu imeObjave = {imeObjave} setImeObjave = {setImeObjave}  bodyObjave = {bodyObjave} 
+                          setBodyObjave = {setBodyObjave} handleKreiraj = {handleKreiraj} />} />
         <Route path="/opis" element={<Opis />} />
         <Route path="/sve-objave" element={<SveObjave />} />
-        <Route path='/objava/:id' element={<StranaObjava/>}  />
+        <Route path='/objava/:id'  element={<StranaObjava objava={objava} handleObrisi={handleObrisi}/>}  />
         <Route path="*" element={<Greska />} />
       </Routes>
       <Futer />
