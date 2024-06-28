@@ -5,7 +5,7 @@ const KreirajObjavu = ({imeObjave, setImeObjave, bodyObjave,setBodyObjave , hand
     <main className='NewPost'>
       <h2>Kreiraj novu objavu</h2>
 
-      <form className='newPostForm' onSubmit={() => handleKreiraj}> 
+      <form className='newPostForm' onSubmit={handleKreiraj}> 
         <label htmlFor='imeObjave'>Naziv objave</label>
         <input id='imeObjave' type='text' required placeholder='Unesi naziv objave' 
                 value={imeObjave} onChange={(e) => setImeObjave(e.target.value)}></input>

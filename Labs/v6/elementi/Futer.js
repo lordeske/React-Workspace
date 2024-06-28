@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Futer = () => {
+const Futer = ({objava}) => {
   return (
-    <footer>
-        <h1> Futer </h1>
+    <footer className='Footer'>
+        <p>{objava.length ? `Broj objava je: ${objava.length}`: "Nema objava na na stranici" }  </p>
     </footer>
   )
 }

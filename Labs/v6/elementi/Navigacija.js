@@ -12,7 +12,7 @@ const Navigacija = ({pretraga, setPretraga}) => {
       </form>
       <ul>
         <li><Link to="/"> Pocetna </Link></li>
-        <li><Link to="/sve-objave"> Sve objave </Link></li>
+        <li><Link to="/kreiraj-objavu"> Nova Objava </Link></li>
          <li><Link to="/opis"> O nama </Link></li>
       </ul>
     </nav>

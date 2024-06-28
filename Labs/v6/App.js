@@ -9,7 +9,8 @@ import Opis from './main_elementi/Opis';
 import Pocetna from './main_elementi/Pocetna';
 import SveObjave from './main_elementi/SveObjave';
 import StranaObjava from './main_elementi/StranaObjava';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 
 
@@ -17,6 +18,8 @@ function App() {
 
   // IMPORTI
   const navigacija = useNavigate();
+
+
 
 
 
@@ -34,17 +37,17 @@ function App() {
     },
     {
       id : 2,
-      naslov : "Svaletka = Spasilac",
+      naslov : "Mali nindza kornajca",
       datetime : "Maj 04, 2024 ",
-      body : "Svako mora da ima jednu svalerku"
+      body : "To je mali nindza Kornjaca"
     },
     {
       id : 3,
-      naslov : "Da li je Breskvica ciganka",
+      naslov : "Gume trosi drift",
       datetime : "July 01, 2022",
-      body : "Nego sta je, gume trosi drift"
+      body : "AZRAAA"
     },])
-  const [pretraga, setPretraga] = useState("");   /// Pretraga 
+  const [pretraga, setPretraga] = useState("");   /// Pretraga na pocetnoj (ono sto kucamo)
   const [rezultatPretrage, setRezultatPretrage] = useState([])
 
 
@@ -72,16 +75,24 @@ function App() {
       e.preventDefault();
 
       const id = objava.length ? objava[objava.length - 1].id + 1 : 1; 
-      const datum = new Date().getDate ;
+      
+      const datum = new Date()
+      
+      const datum1 = datum.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      }
+      )
 
       const novaObjava = {
           id : id,
           naslov : imeObjave,
-          datetime : datum,
+          datetime : datum1,
           body : bodyObjave
       }
 
-      const objave2 = {...objava, novaObjava};
+      const objave2 = [...objava , novaObjava]
       setObajava(objave2);
       navigacija("/")
 
@@ -94,12 +105,32 @@ function App() {
 
 
 
+
+  /// useEffect()
+
+  useEffect(()=>{
+
+    const filtririaniRezultati = objava.filter((obj) => 
+    
+      ((obj.body).toLowerCase()).includes(pretraga.toLowerCase())
+    
+      || 
+
+      ((obj.naslov).toLowerCase()).includes(pretraga.toLowerCase())
+    )
+
+    setRezultatPretrage(filtririaniRezultati.reverse())
+
+  },[objava, pretraga])
+
+
+
   return (
     <div className="App">
       <Zaglavlje naslov="Esketov blog" />
       <Navigacija pretraga={pretraga} setPretraga={setPretraga}/>
       <Routes>
-        <Route path="/" element={<Pocetna objava = {objava} />} />
+        <Route path="/" element={<Pocetna objava = {rezultatPretrage} />} />
         <Route path="/kreiraj-objavu" element={
           <KreirajObjavu imeObjave = {imeObjave} setImeObjave = {setImeObjave}  bodyObjave = {bodyObjave} 
                           setBodyObjave = {setBodyObjave} handleKreiraj = {handleKreiraj} />} />
@@ -108,7 +139,7 @@ function App() {
         <Route path='/objava/:id'  element={<StranaObjava objava={objava} handleObrisi={handleObrisi}/>}  />
         <Route path="*" element={<Greska />} />
       </Routes>
-      <Futer />
+      <Futer objava= {objava}/>
     </div>
   );
 }
