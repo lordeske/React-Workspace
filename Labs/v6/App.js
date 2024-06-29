@@ -10,14 +10,16 @@ import Pocetna from './main_elementi/Pocetna';
 import SveObjave from './main_elementi/SveObjave';
 import StranaObjava from './main_elementi/StranaObjava';
 import { useEffect, useState } from 'react';
-import { flushSync } from 'react-dom';
+import api from './api/objave'
 
 
 
 function App() {
 
   // IMPORTI
-  const navigacija = useNavigate();
+  const navigacija = useNavigate();  /// href
+
+  
 
 
 
@@ -28,25 +30,7 @@ function App() {
 
 
   //// STEJTOVI 
-  const [objava,setObajava] = useState([   /// Nas niz Objava
-    {
-      id : 1,
-      naslov : "Kako pobijediti anksioznost",
-      datetime : "Jul 01, 2022",
-      body : "Moramo da budemo jaki, silni i nenadjebivi. Da grizemo ko lavovi!"
-    },
-    {
-      id : 2,
-      naslov : "Mali nindza kornajca",
-      datetime : "Maj 04, 2024 ",
-      body : "To je mali nindza Kornjaca"
-    },
-    {
-      id : 3,
-      naslov : "Gume trosi drift",
-      datetime : "July 01, 2022",
-      body : "AZRAAA"
-    },])
+  const [objava,setObajava] = useState([])  /// Nas Niz objava
   const [pretraga, setPretraga] = useState("");   /// Pretraga na pocetnoj (ono sto kucamo)
   const [rezultatPretrage, setRezultatPretrage] = useState([])
 
@@ -60,21 +44,38 @@ function App() {
 
   // FUNKCIJE
 
-  const handleObrisi = (id) =>
+  const handleObrisi = async (id) =>
     {
-      const noviNiz = objava.filter(obj => obj.id != id);
 
-      setObajava(noviNiz);
-      navigacija("/") 
+      try
+      {
+        await api.delete(`objave/${id}`)
+
+        const noviNiz = objava.filter(obj => obj.id != id);
+
+        setObajava(noviNiz);
+        navigacija("/") 
+
+      }
+      catch (err)
+      {
+
+        console.log(`Greska koja se desila je: ${err.message}`);
+
+      }
+
+      
     
     }
 
 
-  const handleKreiraj = (e) =>
+  const handleKreiraj = async (e) =>
     {
       e.preventDefault();
 
-      const id = objava.length ? objava[objava.length - 1].id + 1 : 1; 
+      
+
+      const id = objava.length ? (parseInt(objava[objava.length - 1].id) + 1).toString() : 1; 
       
       const datum = new Date()
       
@@ -92,14 +93,28 @@ function App() {
           body : bodyObjave
       }
 
-      const objave2 = [...objava , novaObjava]
-      setObajava(objave2);
-      navigacija("/")
+
+      try
+      {
+        const response = await api.post("/objave", novaObjava)
+
+        const objave2 = [...objava , response.data]
+        setObajava(objave2);
+        navigacija("/")
+  
+  
+        setBodyObjave("");
+        setImeObjave("");
 
 
-      setBodyObjave("");
-      setImeObjave("")
+      }
+      catch (err)
+      {
+        console.log(`Greska koja se desila je ${err.message}`)
+      }
 
+
+      
 
     }
 
@@ -108,7 +123,7 @@ function App() {
 
   /// useEffect()
 
-  useEffect(()=>{
+  useEffect(()=>{     /// use Pretrage
 
     const filtririaniRezultati = objava.filter((obj) => 
     
@@ -122,6 +137,43 @@ function App() {
     setRezultatPretrage(filtririaniRezultati.reverse())
 
   },[objava, pretraga])
+
+
+  useEffect(()=>
+  {
+
+    const fecujObjave = async () => 
+      {
+
+        try 
+        {
+          const response = await api.get("/objave");
+          
+          setObajava(response.data)
+
+
+        }
+        catch (err)
+        {
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+
+        }
+
+
+      }
+
+    fecujObjave()
+
+
+
+  },[])
+
+
+
+
+
 
 
 
