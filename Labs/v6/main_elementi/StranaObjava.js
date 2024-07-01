@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams , Link } from 'react-router-dom'
 
+
 const StranaObjava = ({objava , handleObrisi}) => {
 
   const { id } = useParams();
@@ -17,7 +18,8 @@ const StranaObjava = ({objava , handleObrisi}) => {
             <h2>{obj.naslov}</h2>
             <p className='postDate' > {obj.datetime}</p>
             <p className='postBody' > {obj.body}</p>
-            <button onClick={()=> handleObrisi(obj.id)}>Obrisi ovu objavu</button>
+            <button onClick={()=> handleObrisi(obj.id)} className='deleteButton'>Obrisi ovu objavu</button>
+            <Link to={`/uredi-objavu/${obj.id}`}><button className='editButton'> Uredi objavu</button> </Link>
           </>
           
           }
