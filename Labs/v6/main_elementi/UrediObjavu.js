@@ -40,7 +40,7 @@ const UrediObjavu = ({ objava, editBody, setEditBody, editIme, setEditIme, handl
           <h2>Greska se desila</h2>
           <p>Nece nam se ponoviti</p>
           <p><Link to="/">Vrati se na pocetnu stranu</Link></p>
-          {console.log(obj)}
+          
         </>
       )}
     </main>

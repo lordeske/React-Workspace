@@ -12,9 +12,11 @@ import StranaObjava from './main_elementi/StranaObjava';
 import { useEffect, useState } from 'react';
 import api from './api/objave';
 import UrediObjavu from './main_elementi/UrediObjavu';
+import useVelicinaProzora from './hooks/useVelicinaProzora';
 
 function App() {
   const navigacija = useNavigate();
+  const {width} = useVelicinaProzora();  /// Import i dobijanje sirine iz naseg Hooka
 
   const [objava, setObjava] = useState([]);  
   const [pretraga, setPretraga] = useState("");  
@@ -115,7 +117,7 @@ function App() {
 
   return (
     <div className="App">
-      <Zaglavlje naslov="Esketov blog" />
+      <Zaglavlje naslov="Esketov blog" width = {width}/>
       <Navigacija pretraga={pretraga} setPretraga={setPretraga} />
       <Routes>
         <Route path="/" element={<Pocetna objava={rezultatPretrage} />} />
