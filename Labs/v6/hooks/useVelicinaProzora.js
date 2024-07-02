@@ -29,14 +29,8 @@ const useVelicinaProzora = () =>
             window.addEventListener("resize", odradiResize);
         
         
-            const cleanUP = () => 
-                {
-                    console.log("Radi ako je depenencie useEfekta promijnejen");
-                    window.removeEventListener("reset", odradiResize)
-        
-                }
-        
-                return cleanUP;
+            
+            return () => window.removeEventListener("resize", odradiResize);
         
         
         }, [])

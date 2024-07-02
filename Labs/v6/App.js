@@ -13,10 +13,12 @@ import { useEffect, useState } from 'react';
 import api from './api/objave';
 import UrediObjavu from './main_elementi/UrediObjavu';
 import useVelicinaProzora from './hooks/useVelicinaProzora';
+import useAxiosFetch from './hooks/useAxionFetch';
 
 function App() {
   const navigacija = useNavigate();
   const {width} = useVelicinaProzora();  /// Import i dobijanje sirine iz naseg Hooka
+  const  {data, fetchError, isLoading } = useAxiosFetch("http://localhost:3500/");   // import drugog hooka
 
   const [objava, setObjava] = useState([]);  
   const [pretraga, setPretraga] = useState("");  
@@ -101,6 +103,7 @@ function App() {
     setRezultatPretrage(filtririaniRezultati.reverse());
   }, [objava, pretraga]);
 
+  
   useEffect(() => { 
     const fecujObjave = async () => {
       try {
@@ -114,13 +117,26 @@ function App() {
     };
     fecujObjave();
   }, []);
+  
+
+
+  /*
+  useEffect(()=> {
+
+    setObjava(data);
+    console.log(data)
+
+
+  },[data])
+  */
+
 
   return (
     <div className="App">
       <Zaglavlje naslov="Esketov blog" width = {width}/>
       <Navigacija pretraga={pretraga} setPretraga={setPretraga} />
       <Routes>
-        <Route path="/" element={<Pocetna objava={rezultatPretrage} />} />
+        <Route path="/" element={<Pocetna isLoading = {isLoading} fetchError = {fetchError}  objava={rezultatPretrage} />} />
         <Route path="/kreiraj-objavu" element={
           <KreirajObjavu 
             imeObjave={imeObjave} 

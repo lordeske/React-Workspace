@@ -1,15 +1,12 @@
 import React from 'react'
 import Feed from './Feed'
 
-const Pocetna = ({objava}) => {
+const Pocetna = ({objava , isLoading, fetchError,}) => {
   return (
     <main className='Home'>
-      {objava.length ? (
-        <Feed objava = {objava} ></Feed>
-      ) : 
-      (<p style={{marginTop : "2rem"}}>
-        Nema objava za prikaz
-      </p>)}
+      {isLoading && <p className='statusMesg'>Ucitavam objave</p>}
+      {fetchError && <p className='statusMess' style={{color : "red"}}>{fetchError}</p>}
+      {!isLoading && !fetchError && (objava.length ? <Feed/>)}
     </main>
   )
 }
