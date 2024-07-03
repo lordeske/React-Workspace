@@ -1,11 +1,25 @@
 import React, { useContext } from 'react'
 import { useParams , Link } from 'react-router-dom'
 import DataContext from '../context/dataContext';
+import { useNavigate } from 'react-router-dom';
+import api from '../api/objave';
 
 
 const StranaObjava = () => {
+  const navigacija = useNavigate()
 
-  const {objava , handleObrisi} = useContext(DataContext)
+  const handleObrisi = async (id) => {
+    try {
+      
+      await api.delete(`objave/${id}`);
+      const noviNiz = objava.filter(obj => obj.id !== id);
+      setObjava(noviNiz);
+      navigacija("/");
+    } catch (err) {
+      console.log(`Greska koja se desila je: ${err.message}`);
+    }
+  }; 
+  const {objava, setObjava} = useContext(DataContext)
 
 
   const { id } = useParams();

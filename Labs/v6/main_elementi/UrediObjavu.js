@@ -1,10 +1,41 @@
-import React, { useContext, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import DataContext from '../context/dataContext';
+import api from '../api/objave';
 
 const UrediObjavu = () => {
 
-  const { objava, editBody, setEditBody, editIme, setEditIme, handleAzuriraj } = useContext(DataContext)
+  const navigacija = useNavigate()
+  const [editIme, setEditIme] = useState("");  
+  const [editBody, setEditBody] = useState("");
+
+  const handleAzuriraj = async (id) => {
+    const datum = new Date();
+    const datum1 = datum.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+
+    const updatedObjava = {
+      id: id,
+      naslov: editIme,
+      datetime: datum1,
+      body: editBody
+    };
+
+    try {
+      const response = await api.put(`/objave/${id}`, updatedObjava);
+      setObjava(objava.map((obj) => obj.id === id ? { ...response.data } : obj));
+      setEditIme("");
+      setEditBody("");
+      navigacija("/");
+    } catch (err) {
+      console.log(`Greska koja se desila je ${err.message}`);
+    }
+  };
+
+  const { objava ,setObjava  } = useContext(DataContext)
 
 
   const { id } = useParams();
