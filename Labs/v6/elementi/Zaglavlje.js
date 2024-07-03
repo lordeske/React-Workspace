@@ -1,8 +1,13 @@
 import React from 'react'
 import { FaLaptop, FaMobileAlt, FaTabletAlt } from 'react-icons/fa'
+import { useContext } from 'react'
+import DataContext from '../context/dataContext'
 
 
-const Zaglavlje = ({naslov , width}) => {
+const Zaglavlje = ({naslov}) => {
+
+  const {width} = useContext(DataContext);
+
   return (
     <header className='Header'>
       <h1>{naslov}</h1>

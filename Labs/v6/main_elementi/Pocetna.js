@@ -5,8 +5,8 @@ const Pocetna = ({objava , isLoading, fetchError,}) => {
   return (
     <main className='Home'>
       {isLoading && <p className='statusMesg'>Ucitavam objave</p>}
-      {fetchError && <p className='statusMess' style={{color : "red"}}>{fetchError}</p>}
-      {!isLoading && !fetchError && (objava.length ? <Feed/>)}
+      {!isLoading&& fetchError && <p className='statusMess' style={{color : "red"}}>{fetchError}</p>}
+      {!isLoading && !fetchError && (objava.length ? <Feed objava={objava}/> : <p className='statusMess'>Nema objava nastarnju</p>)}
     </main>
   )
 }
