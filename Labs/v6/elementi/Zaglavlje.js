@@ -1,12 +1,11 @@
 import React from 'react'
 import { FaLaptop, FaMobileAlt, FaTabletAlt } from 'react-icons/fa'
-import { useContext } from 'react'
-import DataContext from '../context/dataContext'
+import useVelicinaProzora from '../hooks/useVelicinaProzora';
 
 
 const Zaglavlje = ({naslov}) => {
 
-  const {width} = useContext(DataContext);
+  const {width} = useVelicinaProzora()
 
   return (
     <header className='Header'>

@@ -1,4 +1,5 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Zaglavlje from './elementi/Zaglavlje';
 import Futer from './elementi/Futer';
 import Navigacija from './elementi/Navigacija';
@@ -18,36 +19,27 @@ function App() {
 
   return (
     <div className="App">
-      <DataProvider>
+      
         <Zaglavlje naslov="Esketov blog"/>
-        <Navigacija pretraga={pretraga} setPretraga={setPretraga} />
+        <DataProvider>
+        <Navigacija  />
         <Routes>
-          <Route path="/" element={<Pocetna isLoading = {isLoading} fetchError = {fetchError}  objava={rezultatPretrage} />} />
+          <Route path="/" element={<Pocetna/>} />
           <Route path="/kreiraj-objavu" element={
-            <KreirajObjavu 
-              imeObjave={imeObjave} 
-              setImeObjave={setImeObjave} 
-              bodyObjave={bodyObjave} 
-              setBodyObjave={setBodyObjave} 
-              handleKreiraj={handleKreiraj} 
+            <KreirajObjavu
             />} 
           />
           <Route path="/opis" element={<Opis />} />
           <Route path="/sve-objave" element={<SveObjave />} />
           <Route path="/uredi-objavu/:id" element={
             <UrediObjavu 
-              editBody={editBody} 
-              setEditBody={setEditBody} 
-              editIme={editIme} 
-              setEditIme={setEditIme} 
-              handleAzuriraj={handleAzuriraj} 
-              objava={objava} 
+              
             />} 
           />
-          <Route path="/objava/:id" element={<StranaObjava objava={objava} handleObrisi={handleObrisi} />} />
+          <Route path="/objava/:id" element={<StranaObjava  />} />
           <Route path="*" element={<Greska />} />
         </Routes>
-        <Futer objava={objava} isLoading = {isLoading} fetchError= {fetchError} />
+        <Futer />
       </DataProvider>
     </div>  
   );

@@ -1,6 +1,5 @@
-import { createContext,useState, useEffect, Children } from "react";
+import { createContext,useState, useEffect } from "react";
 import api from '../api/objave';
-import useVelicinaProzora from '../hooks/useVelicinaProzora';
 import useAxiosFetch from '../hooks/useAxionFetch';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,15 +16,14 @@ const DataContext = createContext({});
 export const DataProvider = ({children}) => 
     {
         const navigacija = useNavigate();
-        const {width} = useVelicinaProzora();  /// Import i dobijanje sirine iz naseg Hooka
+       
         const  {data, fetchError, isLoading } = useAxiosFetch("http://localhost:3500/objave");   // import drugog hooka
 
         const [objava, setObjava] = useState([]);  
         const [pretraga, setPretraga] = useState("");  
         const [rezultatPretrage, setRezultatPretrage] = useState([]);
 
-        const [imeObjave, setImeObjave] = useState("");   
-        const [bodyObjave, setBodyObjave] = useState("");
+        
 
         const [editIme, setEditIme] = useState("");  
         const [editBody, setEditBody] = useState("");
@@ -61,33 +59,7 @@ export const DataProvider = ({children}) =>
             }
           };
         
-          const handleKreiraj = async (e) => {
-            e.preventDefault();
-            const id = objava.length ? (parseInt(objava[objava.length - 1].id) + 1).toString() : 1; 
-            const datum = new Date();
-            const datum1 = datum.toLocaleDateString('en-US', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric'
-            });
-            const novaObjava = {
-              id: id,
-              naslov: imeObjave,
-              datetime: datum1,
-              body: bodyObjave
-            };
-        
-            try {
-              const response = await api.post("/objave", novaObjava);
-              const objave2 = [...objava, response.data];
-              setObjava(objave2);
-              navigacija("/");
-              setBodyObjave("");
-              setImeObjave("");
-            } catch (err) {
-              console.log(`Greska koja se desila je ${err.message}`);
-            }
-          };
+          
         
           const handleAzuriraj = async (id) => {
             const datum = new Date();
@@ -119,23 +91,19 @@ export const DataProvider = ({children}) =>
         
         return (
             <DataContext.Provider value={{
-                width,
                 objava,
                 pretraga,
                 rezultatPretrage,
-                imeObjave,
-                bodyObjave,
                 editIme,
                 editBody,
                 setObjava,
                 setPretraga,
                 setRezultatPretrage,
-                setImeObjave,
-                setBodyObjave,
+                
                 setEditIme,
                 setEditBody,
                 handleObrisi,
-                handleKreiraj,
+                
                 handleAzuriraj,
                 fetchError,
                 isLoading

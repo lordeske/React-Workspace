@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Objava from './Objava'
+import DataContext from '../context/dataContext'
 
 
 const Feed = ({objava}) => {
+
+
   return (
     <>
         {objava.map( obj => 

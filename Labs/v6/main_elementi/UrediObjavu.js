@@ -1,7 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import DataContext from '../context/dataContext';
 
-const UrediObjavu = ({ objava, editBody, setEditBody, editIme, setEditIme, handleAzuriraj }) => {
+const UrediObjavu = () => {
+
+  const { objava, editBody, setEditBody, editIme, setEditIme, handleAzuriraj } = useContext(DataContext)
+
+
   const { id } = useParams();
 
   const obj = objava.find(obj => (obj.id).toString() === id);

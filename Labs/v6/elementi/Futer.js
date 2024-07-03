@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import DataContext from '../context/dataContext'
 
-const Futer = ({objava , fetchError, isLoading}) => {
+const Futer = () => {
+
+  const {objava , fetchError, isLoading} = useContext(DataContext)
+
+
   return (
+
+
+
     <footer className='Footer'>
         
         {isLoading && <p> Cekamo ucitavanje</p>}

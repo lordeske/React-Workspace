@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useParams , Link } from 'react-router-dom'
+import DataContext from '../context/dataContext';
 
 
-const StranaObjava = ({objava , handleObrisi}) => {
+const StranaObjava = () => {
+
+  const {objava , handleObrisi} = useContext(DataContext)
+
 
   const { id } = useParams();
 

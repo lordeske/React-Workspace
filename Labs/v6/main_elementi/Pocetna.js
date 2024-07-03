@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Feed from './Feed'
+import DataContext from '../context/dataContext'
 
-const Pocetna = ({objava , isLoading, fetchError,}) => {
+
+const Pocetna = () => {
+
+  const {objava,isLoading,fetchError} = useContext(DataContext);
+
   return (
     <main className='Home'>
       {isLoading && <p className='statusMesg'>Ucitavam objave</p>}

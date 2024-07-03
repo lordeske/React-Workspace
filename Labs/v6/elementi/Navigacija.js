@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import DataContext from '../context/dataContext'
 
-const Navigacija = ({pretraga, setPretraga}) => {
+
+const Navigacija = () => {
+
+  const {pretraga, setPretraga} = useContext(DataContext) ;
+
+
   return (
     <nav className='Nav'>
       <form className='searchForm' onSubmit={(e)=> e.preventDefault()}> 
