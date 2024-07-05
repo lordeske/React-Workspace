@@ -1,31 +1,26 @@
-import React, { useContext } from 'react'
 import { useParams , Link } from 'react-router-dom'
 import DataContext from '../context/dataContext';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/objave';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+
 
 
 const StranaObjava = () => {
   const navigacija = useNavigate()
+  const { id } = useParams();
+  const obrisiObjavu = useStoreActions((actions) => actions.obrisiObjavu);
+  const getObjavaPoID = useStoreState((state)=> state.getObjavaPoID);
+
+  const obj = getObjavaPoID(id);
+
 
   const handleObrisi = async (id) => {
-    try {
-      
-      await api.delete(`objave/${id}`);
-      const noviNiz = objava.filter(obj => obj.id !== id);
-      setObjava(noviNiz);
-      navigacija("/");
-    } catch (err) {
-      console.log(`Greska koja se desila je: ${err.message}`);
-    }
+    
+    obrisiObjavu(id);
+    navigacija("/")
   }; 
-  const {objava, setObjava} = useContext(DataContext)
-
-
-  const { id } = useParams();
-
-  const obj = objava.find(obj => (obj.id) == id)
-
+  
+  
   
   return (
     <main className='PostPage'>

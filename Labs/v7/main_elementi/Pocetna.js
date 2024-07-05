@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+
 import Feed from './Feed'
-import DataContext from '../context/dataContext'
+import { useStoreState } from 'easy-peasy';
 
 
-const Pocetna = () => {
+const Pocetna = ({fetchError, isLoading}) => {
 
-  const {rezultatPretrage,isLoading,fetchError} = useContext(DataContext);
+  const {rezultatPretrage} = useStoreState((state)=> state.rezultatPretrage);
 
   return (
     <main className='Home'>

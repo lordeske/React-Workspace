@@ -10,10 +10,24 @@ import Opis from './main_elementi/Opis';
 import Pocetna from './main_elementi/Pocetna';
 import SveObjave from './main_elementi/SveObjave';
 import StranaObjava from './main_elementi/StranaObjava';
-import { DataProvider } from './context/dataContext';
+import useAxiosFetch from './hooks/useAxionFetch';
+import { useEffect } from 'react';
+import { action, useStoreActions } from 'easy-peasy';
 
 function App() {
-  
+
+  const setObjava = useStoreActions((actions) => actions.setObjava)
+  const  {data, fetchError, isLoading } = useAxiosFetch("http://localhost:3500/objave");   // import drugog hooka
+
+
+   
+  useEffect(()=> {
+
+    setObjava(data);
+    console.log(data)
+
+
+    },[data, setObjava])
 
 
 
@@ -21,10 +35,10 @@ function App() {
     <div className="App">
       
         <Zaglavlje naslov="Esketov blog"/>
-          <DataProvider>
+         
           <Navigacija  />
           <Routes>
-            <Route path="/" element={<Pocetna/>} />
+            <Route path="/" element={<Pocetna isLoading = {isLoading} fetchError = {fetchError}/>} />
             <Route path="/kreiraj-objavu" element={
               <KreirajObjavu
               />} 
@@ -40,7 +54,7 @@ function App() {
             <Route path="*" element={<Greska />} />
           </Routes>
           <Futer />
-        </DataProvider>
+        
     </div>  
   );
 }

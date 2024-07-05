@@ -1,12 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import DataContext from '../context/dataContext'
+import { actions, useStoreActions, useStoreState } from 'easy-peasy'
 
 
 const Navigacija = () => {
 
-  const {pretraga, setPretraga} = useContext(DataContext) ;
+  const objava = useStoreState((state) => state.objava);
+  const pretraga = useStoreState((state) => state.pretraga);
+  const setPretraga = useStoreActions((actions) => actions.setPretraga)
+  const setRezultatPretrage = useStoreActions((actions) => actions.setRezultatPretrage) 
 
+
+  useEffect(() => { 
+    const filtririaniRezultati = objava.filter((obj) => 
+    obj.body.toLowerCase().includes(pretraga.toLowerCase()) || 
+    obj.naslov.toLowerCase().includes(pretraga.toLowerCase())
+    );
+    setRezultatPretrage(filtririaniRezultati.reverse());
+}, [objava, pretraga]);
 
   return (
     <nav className='Nav'>
