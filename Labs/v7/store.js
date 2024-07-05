@@ -2,6 +2,7 @@ import {createdStore, actions, thunk, computed} from "easy-peasy";
 import api from '../api/objave';
 
 
+
 export default kreirajStore({
 
     objava : [],
@@ -49,7 +50,7 @@ export default kreirajStore({
     }),
 
 
-    sacuvajObjavu : thunk(async (actions,novaObjava,helpers ) => {
+    kreirajObjavu : thunk(async (actions,novaObjava,helpers ) => {
 
         const {objava} = helpers.getState();
 

@@ -1,5 +1,4 @@
 import { useParams , Link } from 'react-router-dom'
-import DataContext from '../context/dataContext';
 import { useNavigate } from 'react-router-dom';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 

@@ -1,13 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import DataContext from '../context/dataContext';
-import api from '../api/objave';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+
 
 const UrediObjavu = () => {
 
   const navigacija = useNavigate()
-  const [editIme, setEditIme] = useState("");  
-  const [editBody, setEditBody] = useState("");
+  const { id } = useParams();
+  
+  const editIme = useStoreState((state) => state.editIme)
+  const editBody = useStoreState((state) => state.editBody)
+
+  const azurirajObjavu = useStoreActions((actions) => actions.azurirajObjavu)
+
+  const setEditIme = useStoreActions((actions) => actions.setEditIme)
+  const setEditBody = useStoreActions((actions) => actions.setEditBody)
+
+  const getObjavaPoID = useStoreState((state)=> state.getObjavaPoID)
+  const obj = getObjavaPoID(id)
+
+
 
   const handleAzuriraj = async (id) => {
     const datum = new Date();
@@ -24,23 +36,16 @@ const UrediObjavu = () => {
       body: editBody
     };
 
-    try {
-      const response = await api.put(`/objave/${id}`, updatedObjava);
-      setObjava(objava.map((obj) => obj.id === id ? { ...response.data } : obj));
-      setEditIme("");
-      setEditBody("");
-      navigacija("/");
-    } catch (err) {
-      console.log(`Greska koja se desila je ${err.message}`);
-    }
+    azurirajObjavu(updatedObjava);
+    navigacija(`/objave/${id}`)
   };
 
-  const { objava ,setObjava  } = useContext(DataContext)
+  
 
 
-  const { id } = useParams();
+  
 
-  const obj = objava.find(obj => (obj.id).toString() === id);
+  
 
   useEffect(() => {
     if (obj) {
@@ -68,7 +73,7 @@ const UrediObjavu = () => {
               value={editBody} 
               onChange={(e) => setEditBody(e.target.value)} 
             />
-            <button type="submit" onClick={() => handleAzuriraj(obj.id)}>Azuriraj tekst</button>
+            <button type="button" onClick={() => handleAzuriraj(obj.id)}>Azuriraj tekst</button>
           </form>
         </>
       ) : (

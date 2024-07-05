@@ -1,17 +1,17 @@
-import React, { useContext } from 'react'
-import DataContext from '../context/dataContext'
-import { useState } from 'react';
-import api from '../api/objave';
+import { action, useStoreActions, useStoreState } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
 
 const KreirajObjavu = () => {
 
   const navigacija = useNavigate();
 
-  const [imeObjave, setImeObjave] = useState("");   
-  const [bodyObjave, setBodyObjave] = useState("");
-
-  const {objava,setObjava} = useContext(DataContext)
+  const objava = useStoreState((state)=> state.objava) 
+  const imeObjave = useStoreState((state) => state.imeObjave) 
+  const bodyObjave = useStoreState((state)=> state.bodyObjave)
+  
+  const kreirajObjavu = useStoreActions((actions) => actions.kreirajObjavu)
+  const setBodyObjave = useStoreActions((actions) => actions.setBodyObjave);
+  const setImeObjave = useStoreActions((actions) => actions.setImeObjave);
 
   const handleKreiraj = async (e) => {
     e.preventDefault();
@@ -29,16 +29,8 @@ const KreirajObjavu = () => {
       body: bodyObjave
     };
 
-    try {
-      const response = await api.post("/objave", novaObjava);
-      const objave2 = [...objava, response.data];
-      setObjava(objave2);
-      navigacija("/");
-      setBodyObjave("");
-      setImeObjave("");
-    } catch (err) {
-      console.log(`Greska koja se desila je ${err.message}`);
-    }
+    kreirajObjavu(novaObjava);
+    navigacija("/")
   };
 
   return (
