@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/lordeske/React-Workspace.git/static/css/main.45f9a1dc.css",
+    "main.js": "/lordeske/React-Workspace.git/static/js/main.fc67b647.js",
+    "index.html": "/lordeske/React-Workspace.git/index.html",
+    "main.45f9a1dc.css.map": "/lordeske/React-Workspace.git/static/css/main.45f9a1dc.css.map",
+    "main.fc67b647.js.map": "/lordeske/React-Workspace.git/static/js/main.fc67b647.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.45f9a1dc.css",
+    "static/js/main.fc67b647.js"
+  ]
+}
