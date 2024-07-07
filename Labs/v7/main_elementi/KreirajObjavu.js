@@ -13,7 +13,7 @@ const KreirajObjavu = () => {
   const setBodyObjave = useStoreActions((actions) => actions.setBodyObjave);
   const setImeObjave = useStoreActions((actions) => actions.setImeObjave);
 
-  const handleKreiraj = async (e) => {
+  const handleKreiraj = (e) => {
     e.preventDefault();
     const id = objava.length ? (parseInt(objava[objava.length - 1].id) + 1).toString() : 1; 
     const datum = new Date();

@@ -21,7 +21,7 @@ const UrediObjavu = () => {
 
 
 
-  const handleAzuriraj = async (id) => {
+  const handleAzuriraj =  (id) => {
     const datum = new Date();
     const datum1 = datum.toLocaleDateString('en-US', {
       day: 'numeric',
@@ -37,7 +37,7 @@ const UrediObjavu = () => {
     };
 
     azurirajObjavu(updatedObjava);
-    navigacija(`/objave/${id}`)
+    navigacija("/")
   };
 
   

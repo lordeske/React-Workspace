@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
 import DataContext from '../context/dataContext'
+import { useStoreState } from 'easy-peasy'
 
 const Futer = () => {
 
-  const {objava , fetchError, isLoading} = useContext(DataContext)
-
+  const {fetchError, isLoading} = useContext(DataContext)
+  
+  const objava = useStoreState((state) => state.objava);
 
   return (
 
