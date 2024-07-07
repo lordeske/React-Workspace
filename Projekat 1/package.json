@@ -2,7 +2,7 @@
   "name": "projekatv1",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/lordeske/React-Workspace.git",
+  "homepage": "https://lordeske.github.io/React-Workspace.git",
   "dependencies": {
     "axios": "^1.7.2",
     "easy-peasy": "^6.0.4",
